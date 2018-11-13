@@ -1,5 +1,6 @@
 import Express, { Request, Response } from "express";
 import http from "http";
+import path from "path";
 import SocketIO from "socket.io";
 
 const app = Express();
@@ -10,7 +11,8 @@ const io = SocketIO(server);
 app.use(Express.static("resources"));
 
 app.get("/", (req: Request, res: Response) => {
-  res.sendFile("resources/ws.html", { root: __dirname + "/../" });
+  const htmlFile = path.join(process.cwd(), "resources/ws.html");
+  res.sendFile(htmlFile);
 });
 
 io.of("/chat").on("connection", ws => {
