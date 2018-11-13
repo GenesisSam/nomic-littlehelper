@@ -1,6 +1,6 @@
-const Express = require("express");
-const http = require("http");
-const SocketIO = require("socket.io");
+import Express, { Request, Response } from "express";
+import http from "http";
+import SocketIO from "socket.io";
 
 const app = Express();
 
@@ -9,14 +9,14 @@ const io = SocketIO(server);
 
 app.use(Express.static("resources"));
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.sendFile("resources/ws.html", { root: __dirname + "/../" });
 });
 
 io.of("/chat").on("connection", ws => {
   ws.on("message", message => {
     // console.log("received: ", message);
-    io.of("/chat").send(message.trim());
+    io.of("/chat").send(message);
   });
 });
 
