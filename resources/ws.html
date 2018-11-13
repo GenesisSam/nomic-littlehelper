@@ -13,7 +13,18 @@
         font-family: "Noto Sans KR", sans-serif;
       }
 
+      .container {
+        position: relative;
+      }
+
+      .profile {
+        float: right;
+      }
+
       .boxWrapper {
+        position: absolute;
+        top: 0;
+        right: 180px;
         width: 400px;
         clear: both;
       }
@@ -62,7 +73,12 @@
     </style>
   </head>
   <body>
-    <div class="boxWrapper"><div id="message" class="speech-bubble"></div></div>
+    <div class="container">
+      <div class="boxWrapper">
+        <div id="message" class="speech-bubble"></div>
+      </div>
+      <img class="profile" src="./profile.png" width="180px" height="180px" />
+    </div>
 
     <script>
       let remainToDisappear = 0;
@@ -71,7 +87,7 @@
 
       // 서버로부터의 메시지가 수신되면
       chat.on("message", function(data) {
-        remainToDisappear = 10;
+        remainToDisappear = 6;
         changeText(data);
       });
 
@@ -79,12 +95,11 @@
         const ele = $("#message");
         ele.text(data);
 
-        ele.toggleClass("appear");
+        ele.toggleClass("appear", true);
       }
 
       // Manage for message hidden
       setInterval(() => {
-        console.log("!!! TASKER run: ", remainToDisappear);
         if (remainToDisappear <= 0) {
           const ele = $("#message");
           ele.removeClass("appear");

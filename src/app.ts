@@ -15,12 +15,9 @@ app.get("/", (req: Request, res: Response) => {
 
 io.of("/chat").on("connection", ws => {
   ws.on("message", message => {
-    console.log("received: ", message);
+    // console.log("received: ", message);
+    io.of("/chat").send(message);
   });
-
-  setInterval(() => {
-    ws.send(`${new Date()}`);
-  }, 5000);
 });
 
 server.listen(3000, () => {
